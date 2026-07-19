@@ -4,6 +4,28 @@
 
 #include <cassert>
 
+static void draw_editor_axis_arrows(Vector3 origin) {
+    constexpr float SHAFT_LENGTH = 1.5f;
+    constexpr float HEAD_LENGTH = 0.4f;
+    constexpr float SHAFT_RADIUS = 0.025f;
+    constexpr float HEAD_RADIUS = 0.12f;
+
+    Vector3 x_shaft_end = { origin.x + SHAFT_LENGTH, origin.y, origin.z };
+    Vector3 x_end = { x_shaft_end.x + HEAD_LENGTH, origin.y, origin.z };
+    DrawCylinderEx(origin, x_shaft_end, SHAFT_RADIUS, SHAFT_RADIUS, 8, RED);
+    DrawCylinderEx(x_shaft_end, x_end, HEAD_RADIUS, 0.0f, 8, RED);
+
+    Vector3 y_shaft_end = { origin.x, origin.y + SHAFT_LENGTH, origin.z };
+    Vector3 y_end = { origin.x, y_shaft_end.y + HEAD_LENGTH, origin.z };
+    DrawCylinderEx(origin, y_shaft_end, SHAFT_RADIUS, SHAFT_RADIUS, 8, GREEN);
+    DrawCylinderEx(y_shaft_end, y_end, HEAD_RADIUS, 0.0f, 8, GREEN);
+
+    Vector3 z_shaft_end = { origin.x, origin.y, origin.z + SHAFT_LENGTH };
+    Vector3 z_end = { origin.x, origin.y, z_shaft_end.z + HEAD_LENGTH };
+    DrawCylinderEx(origin, z_shaft_end, SHAFT_RADIUS, SHAFT_RADIUS, 8, BLUE);
+    DrawCylinderEx(z_shaft_end, z_end, HEAD_RADIUS, 0.0f, 8, BLUE);
+}
+
 void render(
     const GameCamera* game_camera,
     const Entity* entities,
@@ -105,6 +127,19 @@ void render(
             };
             DrawCubeWiresV(colliders->position[i], highlight_size, YELLOW);
         }
+    }
+
+    int selected_index = editor->selected_collider_index;
+    if (editor->active &&
+        selected_index >= 0 &&
+        selected_index < colliders->count) {
+        rlDrawRenderBatchActive();
+        rlDisableDepthTest();
+
+        draw_editor_axis_arrows(colliders->position[selected_index]);
+
+        rlDrawRenderBatchActive();
+        rlEnableDepthTest();
     }
 
     EndMode3D();
