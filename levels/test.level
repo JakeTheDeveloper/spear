@@ -1,0 +1,20 @@
+version 1
+
+# center_x center_y center_z half_x half_y half_z
+box 0 1.5 -30 30 1.5 0.5
+box 0 1.5 30 30 1.5 0.5
+box -30 1.5 0 0.5 1.5 30
+box 30 1.5 0 0.5 1.5 30
+box 0 1 -4 2 1 2
+box -6 1.25 3 1 1.25 3
+box 0 -0.5 0 35 0.5 35
+box 25.9433346 0.5 -5.86735201 3.5 2.5 0.5
+
+# type position_x position_y position_z
+entity player 0 0 8
+entity enemy 4 0 0
+entity enemy -10 0 -8
+entity enemy 12 0 -16
+entity enemy -18 0 10
+entity enemy 20 0 18
+entity enemy 0 0 -24

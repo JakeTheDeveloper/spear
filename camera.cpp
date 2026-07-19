@@ -14,7 +14,7 @@ void camera_initialize(GameCamera* camera) {
 void camera_update(GameCamera* camera, const InputState* input, float delta_time) {
     constexpr float PITCH_LIMIT = 1.55334f;
     constexpr float MAX_LEAN = 0.052f;
-    constexpr float SPEAR_CATCH_ROTATION = 0.045f;
+    constexpr float SPEAR_CATCH_ROTATION = 0.03f;
 
     camera->yaw += input->mouse_delta.x * camera->mouse_sensitivity;
     camera->pitch -= input->mouse_delta.y * camera->mouse_sensitivity;
@@ -32,8 +32,8 @@ void camera_update(GameCamera* camera, const InputState* input, float delta_time
 
         if (camera->spear_catch_time < 0.1f) {
             spear_catch_yaw = SPEAR_CATCH_ROTATION * camera->spear_catch_time / 0.1f;
-        } else if (camera->spear_catch_time < 0.35f) {
-            spear_catch_yaw = SPEAR_CATCH_ROTATION * (1.0f - (camera->spear_catch_time - 0.1f) / 0.25f);
+        } else if (camera->spear_catch_time < 0.22f) {
+            spear_catch_yaw = SPEAR_CATCH_ROTATION * (1.0f - (camera->spear_catch_time - 0.1f) / 0.12f);
         } else {
             camera->spear_catch_active = false;
             camera->spear_catch_time = 0.0f;

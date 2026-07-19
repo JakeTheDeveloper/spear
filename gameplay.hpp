@@ -12,11 +12,10 @@ struct GameplayState {
     Entity entities[MAX_ENTITIES];
 };
 
-void gameplay_initialize(GameplayState* gameplay);
 void gameplay_update(
     GameplayState* gameplay,
     const InputState* input,
     GameCamera* camera,
-    const PhysicsWorld* physics,
+    const StaticColliders* colliders,
     float delta_time
 );

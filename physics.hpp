@@ -10,10 +10,25 @@ struct StaticColliders {
     Vector3 half_size[MAX_STATIC_COLLIDERS];
 };
 
-struct PhysicsWorld {
-    StaticColliders static_colliders;
+struct LineColliderIntersection {
+    bool did_intersect;
+    int collider_index;
+    Vector3 position;
+    Vector3 normal;
 };
 
-void physics_initialize(PhysicsWorld* physics);
-void physics_update(PhysicsWorld* physics, Entity* entities, int entity_count, float delta_time);
-bool physics_linecast_static(const PhysicsWorld* physics, Vector3 start, Vector3 end, Vector3* hit_position);
+void physics_update(const StaticColliders* colliders, Entity* entities, int entity_count, float delta_time);
+LineColliderIntersection physics_line_intersects_colliders(
+    const StaticColliders* colliders,
+    Vector3 start,
+    Vector3 end
+);
+bool physics_linecast_entities(
+    const Entity* entities,
+    int entity_count,
+    const Entity* ignored_entity,
+    Vector3 start,
+    Vector3 end,
+    int* hit_entity_index,
+    Vector3* hit_position
+);
